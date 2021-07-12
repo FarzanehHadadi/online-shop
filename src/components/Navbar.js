@@ -32,9 +32,7 @@ const Nav = () => {
             );
           })}
         </ul>
-        <div className="cart-btn-wrapper">
-          <CartButtons />
-        </div>
+        <CartButtons />
       </div>
     </NavContainer>
   );
