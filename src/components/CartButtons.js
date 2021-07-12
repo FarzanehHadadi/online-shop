@@ -1,14 +1,30 @@
-import React from 'react'
-import { FaShoppingCart, FaUserMinus, FaUserPlus } from 'react-icons/fa'
-import { Link } from 'react-router-dom'
-import styled from 'styled-components'
-import { useProductsContext } from '../context/products_context'
-import { useCartContext } from '../context/cart_context'
-import { useUserContext } from '../context/user_context'
+import React from "react";
+import { FaShoppingCart, FaUserMinus, FaUserPlus } from "react-icons/fa";
+import { Link } from "react-router-dom";
+import styled from "styled-components";
+import { useProductsContext } from "../context/products_context";
+import { useCartContext } from "../context/cart_context";
+import { useUserContext } from "../context/user_context";
 
 const CartButtons = () => {
-  return <h4>cart buttons </h4>
-}
+  return (
+    <Wrapper>
+      <Link className="cart-btn" to="/cart">
+        Cart
+        <div className="cart-container">
+          <FaShoppingCart />
+          <span className="cart-value">0</span>
+        </div>
+      </Link>
+      <Link className="cart-btn" to="">
+        <div className="cart-container">
+          Login
+          <FaUserPlus className="cart-auth" />
+        </div>
+      </Link>
+    </Wrapper>
+  );
+};
 
 const Wrapper = styled.div`
   display: grid;
@@ -62,5 +78,5 @@ const Wrapper = styled.div`
       margin-left: 5px;
     }
   }
-`
-export default CartButtons
+`;
+export default CartButtons;
