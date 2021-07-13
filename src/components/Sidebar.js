@@ -26,14 +26,16 @@ const Sidebar = () => {
             const { id, url, text } = link;
             return (
               <li>
-                <Link key={id} to={url}>
+                <Link onClick={closeSidebar} key={id} to={url}>
                   {text}
                 </Link>
               </li>
             );
           })}
           <li>
-            <Link to="/checkout">checkout</Link>
+            <Link to="/checkout" onClick={closeSidebar}>
+              checkout
+            </Link>
           </li>
         </ul>
         <CartButtons />
