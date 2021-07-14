@@ -25,7 +25,7 @@ const Sidebar = () => {
           {links.map((link) => {
             const { id, url, text } = link;
             return (
-              <li>
+              <li key={id}>
                 <Link onClick={closeSidebar} key={id} to={url}>
                   {text}
                 </Link>
