@@ -60,27 +60,30 @@ const SingleProductPage = () => {
         <Link to="/products" className="btn">
           back to products
         </Link>
-        <section className="product-center">
+        <div className="product-center">
           <ProductImages images={images} />
-          <div className="content">
+          <section className="content">
             <h2>{name}</h2>
-            <Stars />
+            <Stars stars={stars} reviews={reviews} />
             <h5 className="price">{formatPrice(price)}</h5>
             <p className="desc">{description}</p>
-          </div>
-          <p className="info">
-            available : <span>{stock > 0 ? "In stock" : "Out of stock"}</span>
-          </p>
-          <p className="info">
-            SKU : <span>{sku}</span>
-          </p>
-          <p className="info">
-            brand : <span>{company}</span>
-          </p>
+            <p className="info">
+              <span>available :</span>
+              {stock > 0 ? "In stock" : "Out of stock"}
+            </p>
+            <p className="info">
+              <span>SKU :</span>
+              {sku}
+            </p>
+            <p className="info">
+              <span>Brand :</span>
+              {company}
+            </p>
 
-          <hr />
-          {stock > 0 && <AddToCart />}
-        </section>
+            <hr />
+            {stock > 0 && <AddToCart {...product} />}
+          </section>
+        </div>
       </div>
     </Wrapper>
   );
