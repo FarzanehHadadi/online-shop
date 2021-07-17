@@ -11,15 +11,26 @@ const cart_reducer = (state, action) => {
     case ADD_TO_CART: {
       const { id, amount, color, product } = action.payload;
       const tempItem = state.cart.find((item) => item.id === id + color);
-      {
+      if (tempItem) {
+        const tempCart = state.cart.map((item) => {
+          if (item.id === id + color) {
+            let newAmount = item.amount + amount;
+            if (newAmount > item.max) newAmount = item.max;
+            return { ...item, amount: newAmount };
+          } else {
+            return item;
+          }
+        });
+        return { ...state, cart: tempCart };
+      } else {
         const newCartItem = {
           id: id + color,
           color,
           amount,
+          max: product.stock,
           price: product.price,
           name: product.name,
           image: product.images[0].url,
-          max: product.stock,
         };
         return { ...state, cart: [...state.cart, newCartItem] };
       }

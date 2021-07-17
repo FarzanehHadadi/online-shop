@@ -62,7 +62,6 @@ const AddToCart = ({ product }) => {
         to="/cart"
         className="btn"
         onClick={() => {
-          console.log(id, mainColor, amount, product);
           addToCart(id, mainColor, amount, product);
         }}
       >
