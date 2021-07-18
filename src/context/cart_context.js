@@ -18,7 +18,7 @@ const readLocalStorage = () => {
 };
 const initialState = {
   cart: readLocalStorage(),
-  total_count: 0,
+  total_items: 0,
   total_amount: 0,
   shipping_fee: 534,
 };
@@ -32,11 +32,18 @@ export const CartProvider = ({ children }) => {
     dispatch({ type: ADD_TO_CART, payload: { id, amount, color, product } });
   };
   useEffect(() => {
+    dispatch({ type: COUNT_CART_TOTALS });
     localStorage.setItem("cart", JSON.stringify(state.cart));
   }, [state.cart]);
-  const toggleAmount = () => {};
-  const removeItem = () => {};
-  const clearCart = () => {};
+  const toggleAmount = (id, value) => {
+    dispatch({ type: TOGGLE_CART_ITEM_AMOUNT, payload: { id, value } });
+  };
+  const removeItem = (id) => {
+    dispatch({ type: REMOVE_CART_ITEM, payload: id });
+  };
+  const clearCart = () => {
+    dispatch({ type: CLEAR_CART });
+  };
   return (
     <CartContext.Provider
       value={{ ...state, addToCart, toggleAmount, removeItem, clearCart }}
