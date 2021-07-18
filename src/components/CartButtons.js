@@ -9,21 +9,31 @@ import { useUserContext } from "../context/user_context";
 const CartButtons = () => {
   const { closeSidebar } = useProductsContext();
   const { total_items } = useCartContext();
+  const { myUser, loginWithRedirect, logout } = useUserContext();
   return (
     <Wrapper className="cart-btn-wrapper">
       <Link className="cart-btn" to="/cart" onClick={closeSidebar}>
         Cart
-        <div className="cart-container">
+        <span className="cart-container">
           <FaShoppingCart />
           <span className="cart-value">{total_items}</span>
-        </div>
+        </span>
       </Link>
-      <Link className="cart-btn" to="" onClick={closeSidebar}>
-        <div className="cart-container">
+      {myUser ? (
+        <button
+          className="auth-btn"
+          to=""
+          onClick={() => logout({ returnTo: window.location.origin })}
+        >
+          Logout
+          <FaUserMinus />
+        </button>
+      ) : (
+        <button type="button" className="auth-btn" onClick={loginWithRedirect}>
           Login
-          <FaUserPlus className="cart-auth" />
-        </div>
-      </Link>
+          <FaUserPlus />
+        </button>
+      )}
     </Wrapper>
   );
 };
