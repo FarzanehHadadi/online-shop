@@ -1,5 +1,4 @@
 import React from "react";
-import logo from "../assets/logo.svg";
 import { Link } from "react-router-dom";
 import { useProductsContext } from "../context/products_context";
 import { FaTimes } from "react-icons/fa";
@@ -18,7 +17,9 @@ const Sidebar = () => {
         className={`${isSidebarOpen ? "sidebar show-sidebar" : "sidebar"}`}
       >
         <div className="sidebar-header">
-          <img src={logo} className="logo" alt="e-commerce" />
+          <h3 className="logo">
+            diGi <span>shop</span>
+          </h3>
           <button className="close-btn" type="button" onClick={closeSidebar}>
             <FaTimes />
           </button>
@@ -53,6 +54,13 @@ const SidebarContainer = styled.div`
     justify-content: space-between;
     align-items: center;
     padding: 1rem 1.5rem;
+  }
+  .logo {
+    color: var(--clr-primary-5);
+    text-transform: capitalize;
+    span {
+      color: var(--clr-grey-3);
+    }
   }
   .close-btn {
     font-size: 2rem;
