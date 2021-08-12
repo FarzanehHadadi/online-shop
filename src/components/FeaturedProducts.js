@@ -1,15 +1,17 @@
 import React from "react";
-import { useProductsContext } from "../context/products_context";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Error from "./Error";
 import Loading from "./Loading";
 import Product from "./Product";
 import { FaArrowAltCircleLeft } from "react-icons/fa";
+import { connect } from "react-redux";
 
-const FeaturedProducts = () => {
-  const { products_loading, products_error, featured_products } =
-    useProductsContext();
+const FeaturedProducts = ({
+  products_loading,
+  products_error,
+  featured_products,
+}) => {
   if (products_loading) {
     return <Loading />;
   } else if (products_error) {
@@ -38,7 +40,16 @@ const FeaturedProducts = () => {
     );
   }
 };
+const mapStateToProps = (state) => {
+  const { products_loading, products_error, featured_products } =
+    state.products_reducer;
 
+  return {
+    products_loading,
+    products_error,
+    featured_products,
+  };
+};
 const Wrapper = styled.section`
   background: var(--clr-grey-10);
   .featured {
@@ -62,4 +73,4 @@ const Wrapper = styled.section`
   }
 `;
 
-export default FeaturedProducts;
+export default connect(mapStateToProps)(FeaturedProducts);

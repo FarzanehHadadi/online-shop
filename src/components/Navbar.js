@@ -45,9 +45,7 @@ const Nav = ({ open }) => {
     </NavContainer>
   );
 };
-const mapStateToProps = (state) => {
-  return state;
-};
+
 const mapDispatchToProps = (dispatch, ownProps) => {
   return { open: () => dispatch(open_sidebar) };
 };
@@ -125,4 +123,4 @@ const NavContainer = styled.nav`
   }
 `;
 
-export default connect(mapStateToProps, mapDispatchToProps)(Nav);
+export default connect(null, mapDispatchToProps)(Nav);

@@ -2,14 +2,12 @@ import React from "react";
 import { FaShoppingCart, FaUserMinus, FaUserPlus } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-// import { useProductsContext } from "../context/products_context";
 import { useCartContext } from "../context/cart_context";
 import { useUserContext } from "../context/user_context";
 import { connect } from "react-redux";
 import { close_sidebar } from "../redux/actions/main";
 
 const CartButtons = ({ closeSidebar }) => {
-  // const { closeSidebar } = useProductsContext();
   const { total_items } = useCartContext();
   const { myUser, loginWithRedirect, logout } = useUserContext();
   return (

@@ -11,8 +11,11 @@ import {
   SingleProduct,
   PrivateRoute,
 } from "./pages";
-
+import { useEffect } from "react";
+import { fetchProducts } from "./redux/actions/main";
+import store from "./redux/store";
 function App() {
+  store.dispatch(fetchProducts());
   return (
     <>
       <Router>

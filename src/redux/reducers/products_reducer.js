@@ -35,6 +35,7 @@ const products_reducer = (
       return { ...state, single_product_loading: true };
     }
     case types.GET_SINGLE_PRODUCT_SUCCESS: {
+      console.log("action.payload", action.payload);
       return {
         ...state,
         single_product_loading: false,
@@ -49,7 +50,7 @@ const products_reducer = (
       };
     }
     default:
-      throw new Error(`No Matching "${action.type}" - action type`);
+      return state;
   }
 };
 

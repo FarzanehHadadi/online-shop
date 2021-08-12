@@ -20,13 +20,11 @@ ReactDOM.render(
   >
     <Provider store={store}>
       <UserProvider>
-        <ProductsProvider>
-          <FilterProvider>
-            <CartProvider>
-              <App />
-            </CartProvider>
-          </FilterProvider>
-        </ProductsProvider>
+        <FilterProvider>
+          <CartProvider>
+            <App />
+          </CartProvider>
+        </FilterProvider>
       </UserProvider>
     </Provider>
   </Auth0Provider>,

@@ -10,7 +10,7 @@ import {
   FILTER_PRODUCTS,
   CLEAR_FILTERS,
 } from "../actions";
-import { useProductsContext } from "./products_context";
+// import { useProductsContext } from "./products_context";
 
 const initialState = {
   all_products: [],
@@ -33,10 +33,10 @@ const FilterContext = React.createContext();
 
 export const FilterProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const { products } = useProductsContext();
-  useEffect(() => {
-    dispatch({ type: LOAD_PRODUCTS, payload: products });
-  }, [products]);
+  // const { products } = useProductsContext();
+  // useEffect(() => {
+  //   dispatch({ type: LOAD_PRODUCTS, payload: products });
+  // }, [products]);
 
   const setGridView = () => {
     dispatch({ type: SET_GRIDVIEW });
@@ -53,7 +53,8 @@ export const FilterProvider = ({ children }) => {
   useEffect(() => {
     dispatch({ type: FILTER_PRODUCTS });
     dispatch({ type: SORT_PRODUCTS });
-  }, [products, state.sort, state.filters]);
+  }, [state.sort, state.filters]);
+  //  }, [ products,state.sort, state.filters]);
 
   const updateFilters = (e) => {
     const name = e.target.name;
