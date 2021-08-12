@@ -7,6 +7,9 @@ import { FilterProvider } from "./context/filter_context";
 import { CartProvider } from "./context/cart_context";
 import { UserProvider } from "./context/user_context";
 import { Auth0Provider } from "@auth0/auth0-react";
+import { Provider } from "react-redux";
+import store from "./redux/store";
+// import { fetchPosts } from "./redux/actions/main";
 
 ReactDOM.render(
   <Auth0Provider
@@ -15,15 +18,17 @@ ReactDOM.render(
     redirectUri={window.location.origin}
     cacheLocation="localstorage"
   >
-    <UserProvider>
-      <ProductsProvider>
-        <FilterProvider>
-          <CartProvider>
-            <App />
-          </CartProvider>
-        </FilterProvider>
-      </ProductsProvider>
-    </UserProvider>
+    <Provider store={store}>
+      <UserProvider>
+        <ProductsProvider>
+          <FilterProvider>
+            <CartProvider>
+              <App />
+            </CartProvider>
+          </FilterProvider>
+        </ProductsProvider>
+      </UserProvider>
+    </Provider>
   </Auth0Provider>,
   document.getElementById("root")
 );
