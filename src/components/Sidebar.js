@@ -1,16 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useProductsContext } from "../context/products_context";
 import { FaTimes } from "react-icons/fa";
 import { links } from "../utils/constants";
 import styled from "styled-components";
 import CartButtons from "./CartButtons";
 import { useUserContext } from "../context/user_context";
+import { connect } from "react-redux";
+import { close_sidebar } from "../redux/actions/main";
 
-const Sidebar = () => {
-  const { isSidebarOpen, closeSidebar } = useProductsContext();
+const Sidebar = ({ isSidebarOpen, close }) => {
   const { myUser } = useUserContext();
-
   return (
     <SidebarContainer>
       <aside
@@ -20,7 +19,7 @@ const Sidebar = () => {
           <h3 className="logo">
             diGi <span>shop</span>
           </h3>
-          <button className="close-btn" type="button" onClick={closeSidebar}>
+          <button className="close-btn" type="button" onClick={() => close()}>
             <FaTimes />
           </button>
         </div>
@@ -29,7 +28,7 @@ const Sidebar = () => {
             const { id, url, text } = link;
             return (
               <li key={id}>
-                <Link onClick={closeSidebar} key={id} to={url}>
+                <Link onClick={close} key={id} to={url}>
                   {text}
                 </Link>
               </li>
@@ -46,7 +45,12 @@ const Sidebar = () => {
     </SidebarContainer>
   );
 };
-
+const mapStateToProps = (state) => {
+  return { isSidebarOpen: state.products_reducer.isSidebarOpen };
+};
+const mapDispatchToProps = (dispatch) => {
+  return { close: () => dispatch(close_sidebar) };
+};
 const SidebarContainer = styled.div`
   text-align: center;
   .sidebar-header {
@@ -125,4 +129,4 @@ const SidebarContainer = styled.div`
   }
 `;
 
-export default Sidebar;
+export default connect(mapStateToProps, mapDispatchToProps)(Sidebar);

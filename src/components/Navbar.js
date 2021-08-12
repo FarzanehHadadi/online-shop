@@ -4,11 +4,11 @@ import { FaBars } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { links } from "../utils/constants";
 import CartButtons from "./CartButtons";
-import { useProductsContext } from "../context/products_context";
 import { useUserContext } from "../context/user_context";
+import { connect } from "react-redux";
+import { open_sidebar } from "../redux/actions/main";
 
-const Nav = () => {
-  const { openSidebar } = useProductsContext();
+const Nav = ({ open }) => {
   const { myUser } = useUserContext();
   return (
     <NavContainer>
@@ -19,7 +19,7 @@ const Nav = () => {
               diGi <span>shop</span>
             </h3>
           </Link>
-          <button className="nav-toggle" onClick={openSidebar}>
+          <button className="nav-toggle" onClick={() => open()}>
             <FaBars />
           </button>
         </div>
@@ -45,7 +45,12 @@ const Nav = () => {
     </NavContainer>
   );
 };
-
+const mapStateToProps = (state) => {
+  return state;
+};
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return { open: () => dispatch(open_sidebar) };
+};
 const NavContainer = styled.nav`
   height: 5rem;
   display: flex;
@@ -120,4 +125,4 @@ const NavContainer = styled.nav`
   }
 `;
 
-export default Nav;
+export default connect(mapStateToProps, mapDispatchToProps)(Nav);

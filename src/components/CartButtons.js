@@ -2,12 +2,14 @@ import React from "react";
 import { FaShoppingCart, FaUserMinus, FaUserPlus } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { useProductsContext } from "../context/products_context";
+// import { useProductsContext } from "../context/products_context";
 import { useCartContext } from "../context/cart_context";
 import { useUserContext } from "../context/user_context";
+import { connect } from "react-redux";
+import { close_sidebar } from "../redux/actions/main";
 
-const CartButtons = () => {
-  const { closeSidebar } = useProductsContext();
+const CartButtons = ({ closeSidebar }) => {
+  // const { closeSidebar } = useProductsContext();
   const { total_items } = useCartContext();
   const { myUser, loginWithRedirect, logout } = useUserContext();
   return (
@@ -37,7 +39,9 @@ const CartButtons = () => {
     </Wrapper>
   );
 };
-
+const mapDispatchToProps = (dispatch) => {
+  return { closeSidebar: () => dispatch({ close_sidebar }) };
+};
 const Wrapper = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -91,4 +95,4 @@ const Wrapper = styled.div`
     }
   }
 `;
-export default CartButtons;
+export default connect(null, mapDispatchToProps)(CartButtons);
