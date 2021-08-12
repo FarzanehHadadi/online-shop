@@ -6,7 +6,7 @@ import styled from "styled-components";
 import CartButtons from "./CartButtons";
 import { useUserContext } from "../context/user_context";
 import { connect } from "react-redux";
-import { close_sidebar } from "../redux/actions/main";
+import { close_sidebar } from "../redux/actions/products_actions";
 
 const Sidebar = ({ isSidebarOpen, close }) => {
   const { myUser } = useUserContext();

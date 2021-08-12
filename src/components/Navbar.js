@@ -6,7 +6,7 @@ import { links } from "../utils/constants";
 import CartButtons from "./CartButtons";
 import { useUserContext } from "../context/user_context";
 import { connect } from "react-redux";
-import { open_sidebar } from "../redux/actions/main";
+import { open_sidebar } from "../redux/actions/products_actions";
 
 const Nav = ({ open }) => {
   const { myUser } = useUserContext();

@@ -3,7 +3,7 @@ import { useParams, useHistory } from "react-router-dom";
 import { single_product_url as url } from "../utils/constants";
 import { formatPrice } from "../utils/helpers";
 import { connect } from "react-redux";
-import { fetchSingleProduct } from "../redux/actions/main";
+import { fetchSingleProduct } from "../redux/actions/products_actions";
 import {
   Loading,
   Error,
