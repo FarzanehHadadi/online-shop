@@ -4,15 +4,20 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { useCartContext } from "../context/cart_context";
 import { useUserContext } from "../context/user_context";
-import { connect } from "react-redux";
 import { close_sidebar } from "../redux/actions/products_actions";
+import { useDispatch } from "react-redux";
 
-const CartButtons = ({ closeSidebar }) => {
+const CartButtons = () => {
   const { total_items } = useCartContext();
   const { myUser, loginWithRedirect, logout } = useUserContext();
+  const dispatch = useDispatch();
   return (
     <Wrapper className="cart-btn-wrapper">
-      <Link className="cart-btn" to="/cart" onClick={closeSidebar}>
+      <Link
+        className="cart-btn"
+        to="/cart"
+        onClick={() => dispatch(close_sidebar)}
+      >
         Cart
         <span className="cart-container">
           <FaShoppingCart />
@@ -93,4 +98,4 @@ const Wrapper = styled.div`
     }
   }
 `;
-export default connect(null, mapDispatchToProps)(CartButtons);
+export default CartButtons;

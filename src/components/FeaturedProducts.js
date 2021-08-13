@@ -5,13 +5,12 @@ import Error from "./Error";
 import Loading from "./Loading";
 import Product from "./Product";
 import { FaArrowAltCircleLeft } from "react-icons/fa";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 
-const FeaturedProducts = ({
-  products_loading,
-  products_error,
-  featured_products,
-}) => {
+const FeaturedProducts = () => {
+  const { products_loading, products_error, featured_products } = useSelector(
+    (state) => state.products_reducer
+  );
   if (products_loading) {
     return <Loading />;
   } else if (products_error) {
@@ -40,16 +39,7 @@ const FeaturedProducts = ({
     );
   }
 };
-const mapStateToProps = (state) => {
-  const { products_loading, products_error, featured_products } =
-    state.products_reducer;
 
-  return {
-    products_loading,
-    products_error,
-    featured_products,
-  };
-};
 const Wrapper = styled.section`
   background: var(--clr-grey-10);
   .featured {
@@ -73,4 +63,4 @@ const Wrapper = styled.section`
   }
 `;
 
-export default connect(mapStateToProps)(FeaturedProducts);
+export default FeaturedProducts;

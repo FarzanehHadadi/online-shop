@@ -2,8 +2,8 @@ import React, { useEffect } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { single_product_url as url } from "../utils/constants";
 import { formatPrice } from "../utils/helpers";
-import { connect } from "react-redux";
 import { fetchSingleProduct } from "../redux/actions/products_actions";
+import { useDispatch, useSelector } from "react-redux";
 import {
   Loading,
   Error,
@@ -15,16 +15,17 @@ import {
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
-const SingleProductPage = ({
-  single_product_loading: loading,
-  single_product_error: error,
-  single_product: product,
-  fetchSingleProduct,
-}) => {
+const SingleProductPage = () => {
+  const {
+    single_product_loading: loading,
+    single_product_error: error,
+    single_product: product,
+  } = useSelector((state) => state.products_reducer);
+  const dispatch = useDispatch();
   const { id } = useParams();
   const history = useHistory();
   useEffect(() => {
-    fetchSingleProduct(`${url}${id}`);
+    dispatch(fetchSingleProduct(`${url}${id}`));
   }, []);
   useEffect(() => {
     if (error) {
@@ -88,26 +89,8 @@ const SingleProductPage = ({
     </Wrapper>
   );
 };
-const mapStateToProps = (state) => {
-  const {
-    single_product_loading: loading,
-    single_product_error: error,
-    single_product: product,
-  } = state.products_reducer;
-  return {
-    single_product_loading: loading,
-    single_product_error: error,
-    single_product: product,
-  };
-};
-const mapDispatchToProps = (dispatch) => {
-  // const { new_url } = ownProps;
-  // console.log("ownProps", new_url);
-  return {
-    fetchSingleProduct: (new_url) => dispatch(fetchSingleProduct(new_url)),
-  };
-};
-export default connect(mapStateToProps, mapDispatchToProps)(SingleProductPage);
+
+export default SingleProductPage;
 const Wrapper = styled.main`
   .product-center {
     display: grid;

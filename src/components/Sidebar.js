@@ -5,10 +5,14 @@ import { links } from "../utils/constants";
 import styled from "styled-components";
 import CartButtons from "./CartButtons";
 import { useUserContext } from "../context/user_context";
-import { connect } from "react-redux";
 import { close_sidebar } from "../redux/actions/products_actions";
+import { useSelector, useDispatch } from "react-redux";
 
-const Sidebar = ({ isSidebarOpen, close }) => {
+const Sidebar = () => {
+  const isSidebarOpen = useSelector(
+    (state) => state.products_reducer.isSidebarOpen
+  );
+  const dispatch = useDispatch();
   const { myUser } = useUserContext();
   return (
     <SidebarContainer>
@@ -19,7 +23,11 @@ const Sidebar = ({ isSidebarOpen, close }) => {
           <h3 className="logo">
             diGi <span>shop</span>
           </h3>
-          <button className="close-btn" type="button" onClick={() => close()}>
+          <button
+            className="close-btn"
+            type="button"
+            onClick={() => dispatch(close_sidebar)}
+          >
             <FaTimes />
           </button>
         </div>
@@ -28,7 +36,7 @@ const Sidebar = ({ isSidebarOpen, close }) => {
             const { id, url, text } = link;
             return (
               <li key={id}>
-                <Link onClick={close} key={id} to={url}>
+                <Link onClick={() => dispatch(close_sidebar)} key={id} to={url}>
                   {text}
                 </Link>
               </li>
@@ -45,12 +53,7 @@ const Sidebar = ({ isSidebarOpen, close }) => {
     </SidebarContainer>
   );
 };
-const mapStateToProps = (state) => {
-  return { isSidebarOpen: state.products_reducer.isSidebarOpen };
-};
-const mapDispatchToProps = (dispatch) => {
-  return { close: () => dispatch(close_sidebar) };
-};
+
 const SidebarContainer = styled.div`
   text-align: center;
   .sidebar-header {
@@ -129,4 +132,4 @@ const SidebarContainer = styled.div`
   }
 `;
 
-export default connect(mapStateToProps, mapDispatchToProps)(Sidebar);
+export default Sidebar;

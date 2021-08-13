@@ -5,11 +5,12 @@ import { Link } from "react-router-dom";
 import { links } from "../utils/constants";
 import CartButtons from "./CartButtons";
 import { useUserContext } from "../context/user_context";
-import { connect } from "react-redux";
 import { open_sidebar } from "../redux/actions/products_actions";
+import { useDispatch } from "react-redux";
 
-const Nav = ({ open }) => {
+const Nav = () => {
   const { myUser } = useUserContext();
+  const dispatch = useDispatch();
   return (
     <NavContainer>
       <div className="nav-center">
@@ -19,7 +20,7 @@ const Nav = ({ open }) => {
               diGi <span>shop</span>
             </h3>
           </Link>
-          <button className="nav-toggle" onClick={() => open()}>
+          <button className="nav-toggle" onClick={() => dispatch(open_sidebar)}>
             <FaBars />
           </button>
         </div>
@@ -123,4 +124,4 @@ const NavContainer = styled.nav`
   }
 `;
 
-export default connect(null, mapDispatchToProps)(Nav);
+export default Nav;
