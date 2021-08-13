@@ -27,7 +27,7 @@ const Filters = () => {
 
   const dispatch = useDispatch();
   React.useEffect(() => {
-    dispatch(load_products);
+    dispatch(load_products(products));
   }, [products]);
   const categories = getUniqueValues(all_products, "category");
   const companies = getUniqueValues(all_products, "company");
@@ -43,7 +43,9 @@ const Filters = () => {
               type="text"
               name="text"
               value={text}
-              onChange={(e) => dispatch(updateFilters(e))}
+              onChange={(e) =>
+                dispatch(updateFilters(e.target.name, e.target.value))
+              }
               placeholder="Search"
             />
           </div>
@@ -54,7 +56,9 @@ const Filters = () => {
                 <button
                   key={index}
                   className={`${category === c.toLowerCase() && "active"}`}
-                  onClick={(e) => dispatch(updateFilters(e))}
+                  onClick={(e) =>
+                    dispatch(updateFilters(e.target.name, e.target.textContent))
+                  }
                   name="category"
                   type="button"
                 >
@@ -67,7 +71,9 @@ const Filters = () => {
             <h5>company</h5>
             <select
               name="company"
-              onChange={(e) => dispatch(updateFilters(e))}
+              onChange={(e) =>
+                dispatch(updateFilters(e.target.name, e.target.value))
+              }
               value={company}
               className="company"
             >
@@ -88,7 +94,14 @@ const Filters = () => {
                         color === "all" ? "all-btn active" : "all-btn"
                       }`}
                       name="color"
-                      onClick={(e) => dispatch(updateFilters(e))}
+                      onClick={(e) =>
+                        dispatch(
+                          updateFilters(
+                            e.target.name,
+                            e.target.getAttribute("data-color")
+                          )
+                        )
+                      }
                       data-color={"all"}
                     >
                       ALL
@@ -102,7 +115,14 @@ const Filters = () => {
                       color === c ? "color-btn active" : "color-btn"
                     }`}
                     name="color"
-                    onClick={(e) => dispatch(updateFilters(e))}
+                    onClick={(e) =>
+                      dispatch(
+                        updateFilters(
+                          e.target.name,
+                          e.target.getAttribute("data-color")
+                        )
+                      )
+                    }
                     style={{ backgroundColor: c }}
                     data-color={c}
                   >
@@ -117,7 +137,9 @@ const Filters = () => {
             <p>{formatPrice(price)}</p>
             <input
               type="range"
-              onChange={(e) => dispatch(updateFilters(e))}
+              onChange={(e) =>
+                dispatch(updateFilters(e.target.name, Number(e.target.value)))
+              }
               name="price"
               min={min_price}
               max={max_price}
@@ -131,7 +153,9 @@ const Filters = () => {
               checked={shipping}
               id="shipping"
               name="shipping"
-              onChange={(e) => dispatch(updateFilters(e))}
+              onChange={(e) =>
+                dispatch(updateFilters(e.target.name, e.target.checked))
+              }
             />
           </div>
         </form>

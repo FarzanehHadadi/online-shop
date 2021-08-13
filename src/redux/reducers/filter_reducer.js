@@ -30,6 +30,7 @@ const filter_reducer = (
 ) => {
   switch (action.type) {
     case LOAD_PRODUCTS:
+      console.log("from load product");
       const prices = action.payload.map((item) => item.price);
       const maxPrice = Math.max(...prices);
       return {
@@ -70,6 +71,7 @@ const filter_reducer = (
       return { ...state, filtered_products: temp_products };
     }
     case UPDATE_FILTERS:
+      console.log("hello from reducer", action.payload);
       const { name, value } = action.payload;
       return { ...state, filters: { ...state.filters, [name]: value } };
     case FILTER_PRODUCTS: {

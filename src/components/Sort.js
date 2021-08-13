@@ -1,5 +1,4 @@
 import React from "react";
-import { useFilterContext } from "../context/filter_context";
 import { BsFillGridFill, BsList } from "react-icons/bs";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
@@ -41,7 +40,7 @@ const Sort = () => {
           name="sort"
           id="sort"
           className="sort-input"
-          onChange={() => dispatch(updateSort)}
+          onChange={(e) => dispatch(updateSort(e.target.value))}
           value={sort}
         >
           <option value="price-lowest"> price (lowest)</option>
