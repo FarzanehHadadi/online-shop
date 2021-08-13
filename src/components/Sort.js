@@ -2,29 +2,33 @@ import React from "react";
 import { useFilterContext } from "../context/filter_context";
 import { BsFillGridFill, BsList } from "react-icons/bs";
 import styled from "styled-components";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  setGridView,
+  setListView,
+  updateSort,
+} from "../redux/actions/filter_actions";
 const Sort = () => {
   const {
     grid_view,
     filtered_products: products,
-    setGridView,
-    setListView,
     sort,
-    updateSort,
-  } = useFilterContext();
+  } = useSelector((state) => state.filter_reducer);
+  const dispatch = useDispatch();
   return (
     <Wrapper>
       <div className="btn-container">
         <button
           type="button"
           className={`${grid_view ? "active" : ""}`}
-          onClick={setGridView}
+          onClick={() => dispatch(setGridView)}
         >
           <BsFillGridFill />
         </button>
         <button
           type="button"
           className={`${!grid_view ? "active" : ""}`}
-          onClick={setListView}
+          onClick={() => dispatch(setListView)}
         >
           <BsList />
         </button>
@@ -37,7 +41,7 @@ const Sort = () => {
           name="sort"
           id="sort"
           className="sort-input"
-          onChange={updateSort}
+          onChange={() => dispatch(updateSort)}
           value={sort}
         >
           <option value="price-lowest"> price (lowest)</option>

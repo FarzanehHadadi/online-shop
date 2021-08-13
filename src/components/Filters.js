@@ -1,25 +1,34 @@
 import React from "react";
 import styled from "styled-components";
-import { useFilterContext } from "../context/filter_context";
 import { getUniqueValues, formatPrice } from "../utils/helpers";
 import { FaCheck } from "react-icons/fa";
+import {
+  clearFilters,
+  updateFilters,
+  load_products,
+} from "../redux/actions/filter_actions";
+
+import { useSelector, useDispatch } from "react-redux";
 
 const Filters = () => {
   const {
-    filters: {
-      text,
-      company,
-      category,
-      price,
-      min_price,
-      max_price,
-      color,
-      shipping,
-    },
-    clearFilters,
-    updateFilters,
-    all_products,
-  } = useFilterContext();
+    text,
+    company,
+    category,
+    price,
+    min_price,
+    max_price,
+    color,
+    shipping,
+  } = useSelector((state) => state.filter_reducer.filters);
+  const { all_products } = useSelector((state) => state.filter_reducer);
+
+  const products = useSelector((state) => state.products_reducer.products);
+
+  const dispatch = useDispatch();
+  React.useEffect(() => {
+    dispatch(load_products);
+  }, [products]);
   const categories = getUniqueValues(all_products, "category");
   const companies = getUniqueValues(all_products, "company");
   const colors = getUniqueValues(all_products, "colors");
@@ -34,7 +43,7 @@ const Filters = () => {
               type="text"
               name="text"
               value={text}
-              onChange={updateFilters}
+              onChange={(e) => dispatch(updateFilters(e))}
               placeholder="Search"
             />
           </div>
@@ -45,7 +54,7 @@ const Filters = () => {
                 <button
                   key={index}
                   className={`${category === c.toLowerCase() && "active"}`}
-                  onClick={updateFilters}
+                  onClick={(e) => dispatch(updateFilters(e))}
                   name="category"
                   type="button"
                 >
@@ -58,7 +67,7 @@ const Filters = () => {
             <h5>company</h5>
             <select
               name="company"
-              onChange={updateFilters}
+              onChange={(e) => dispatch(updateFilters(e))}
               value={company}
               className="company"
             >
@@ -79,7 +88,7 @@ const Filters = () => {
                         color === "all" ? "all-btn active" : "all-btn"
                       }`}
                       name="color"
-                      onClick={updateFilters}
+                      onClick={(e) => dispatch(updateFilters(e))}
                       data-color={"all"}
                     >
                       ALL
@@ -93,7 +102,7 @@ const Filters = () => {
                       color === c ? "color-btn active" : "color-btn"
                     }`}
                     name="color"
-                    onClick={updateFilters}
+                    onClick={(e) => dispatch(updateFilters(e))}
                     style={{ backgroundColor: c }}
                     data-color={c}
                   >
@@ -108,7 +117,7 @@ const Filters = () => {
             <p>{formatPrice(price)}</p>
             <input
               type="range"
-              onChange={updateFilters}
+              onChange={(e) => dispatch(updateFilters(e))}
               name="price"
               min={min_price}
               max={max_price}
@@ -122,11 +131,11 @@ const Filters = () => {
               checked={shipping}
               id="shipping"
               name="shipping"
-              onChange={updateFilters}
+              onChange={(e) => dispatch(updateFilters(e))}
             />
           </div>
         </form>
-        <button className="clear-btn" onClick={clearFilters}>
+        <button className="clear-btn" onClick={() => dispatch(clearFilters)}>
           {" "}
           clear filters
         </button>
@@ -134,7 +143,7 @@ const Filters = () => {
     </Wrapper>
   );
 };
-
+export default Filters;
 const Wrapper = styled.section`
   .form-control {
     margin-bottom: 1.25rem;
@@ -234,5 +243,3 @@ const Wrapper = styled.section`
     }
   }
 `;
-
-export default Filters;
