@@ -2,15 +2,20 @@ import React from "react";
 import { FaShoppingCart, FaUserMinus, FaUserPlus } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { useCartContext } from "../context/cart_context";
 import { useUserContext } from "../context/user_context";
 import { close_sidebar } from "../redux/actions/products_actions";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { countCartTotals } from "../redux/actions/cart_actions";
 
 const CartButtons = () => {
-  const { total_items } = useCartContext();
+  const { cart } = useSelector((state) => state.cart_reducer);
+  const { total_items } = useSelector((state) => state.cart_reducer);
   const { myUser, loginWithRedirect, logout } = useUserContext();
   const dispatch = useDispatch();
+  React.useEffect(() => {
+    dispatch(countCartTotals);
+    localStorage.setItem("cart", JSON.stringify(cart));
+  }, [cart]);
   return (
     <Wrapper className="cart-btn-wrapper">
       <Link
@@ -42,9 +47,7 @@ const CartButtons = () => {
     </Wrapper>
   );
 };
-const mapDispatchToProps = (dispatch) => {
-  return { closeSidebar: () => dispatch({ close_sidebar }) };
-};
+
 const Wrapper = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;

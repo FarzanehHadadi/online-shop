@@ -3,16 +3,16 @@ import styled from "styled-components";
 import { formatPrice } from "../utils/helpers";
 import AmountButtons from "./AmountButtons";
 import { FaTrash } from "react-icons/fa";
-import { useCartContext } from "../context/cart_context";
+import { useDispatch } from "react-redux";
+import { toggleAmount, removeItem } from "../redux/actions/cart_actions";
 const CartItem = ({ id, color, amount, price, name, image }) => {
-  const { toggleAmount, removeItem } = useCartContext();
+  const dispatch = useDispatch();
+
   const decrease = () => {
-    console.log("hello world");
     toggleAmount(id, amount - 1);
   };
-  const increase = () => {
-    toggleAmount(id, amount + 1);
-  };
+  const increase = () => dispatch(toggleAmount(id, amount + 1));
+
   return (
     <Wrapper>
       <div className="title">
@@ -28,7 +28,7 @@ const CartItem = ({ id, color, amount, price, name, image }) => {
       <p className="price">{formatPrice(price)}</p>
       <AmountButtons decrease={decrease} increase={increase} amount={amount} />
       <h5 className="subtotal">{formatPrice(amount * price)}</h5>
-      <button className="remove-btn" onClick={() => removeItem(id)}>
+      <button className="remove-btn" onClick={() => dispatch(removeItem(id))}>
         <FaTrash />
       </button>
     </Wrapper>

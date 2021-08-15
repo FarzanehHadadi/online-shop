@@ -47,9 +47,6 @@ const Nav = () => {
   );
 };
 
-const mapDispatchToProps = (dispatch, ownProps) => {
-  return { open: () => dispatch(open_sidebar) };
-};
 const NavContainer = styled.nav`
   height: 5rem;
   display: flex;

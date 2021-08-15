@@ -4,13 +4,26 @@ import {
   COUNT_CART_TOTALS,
   REMOVE_CART_ITEM,
   TOGGLE_CART_ITEM_AMOUNT,
-} from "../actions";
-
-const cart_reducer = (state, action) => {
+} from "../types";
+const readLocalStorage = () => {
+  let cart = localStorage.getItem("cart");
+  if (cart) {
+    console.log("cart", cart);
+    return JSON.parse(localStorage.getItem("cart"));
+  } else {
+    return [];
+  }
+};
+const initialState = {
+  cart: readLocalStorage(),
+  total_items: 0,
+  total_amount: 0,
+  shipping_fee: 534,
+};
+const cart_reducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_TO_CART: {
       const { id, amount, color, product } = action.payload;
-      console.log(state.cart);
       const tempItem = state.cart.find((item) => {
         return item.id === id + color;
       });
@@ -70,7 +83,6 @@ const cart_reducer = (state, action) => {
 
           total.total_items += amount;
           total.total_amount += price * amount;
-          console.log(total);
           return total;
         },
         {
@@ -81,7 +93,7 @@ const cart_reducer = (state, action) => {
       return { ...state, total_amount, total_items };
     }
     default:
-      throw new Error(`No Matching "${action.type}" - action type`);
+      return state;
   }
 };
 

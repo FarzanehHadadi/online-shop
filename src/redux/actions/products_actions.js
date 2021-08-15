@@ -34,10 +34,8 @@ export const fetchSingleProduct = (url) => {
     dispatch(get_single_product_begin);
     try {
       const response = await axios.get(url);
-      console.log("get_single_product_success", get_single_product_success);
       dispatch(get_single_product_success(response.data));
     } catch (err) {
-      console.log("from error");
       console.log(err);
       dispatch(get_single_product_error);
     }
