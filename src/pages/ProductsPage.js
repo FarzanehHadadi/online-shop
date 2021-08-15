@@ -1,13 +1,20 @@
-import React from "react";
+import { React, lazy, Suspense, useEffect } from "react";
 import styled from "styled-components";
-import { Filters, ProductList, Sort, PageHero } from "../components";
+import { Filters, Sort, PageHero } from "../components";
 import { useSelector, useDispatch } from "react-redux";
 import { sortProducts, filterProducts } from "../redux/actions/filter_actions";
+import Loading from "../components/Loading";
+const ProductList = lazy(() => {
+  return new Promise((resolve) => {
+    setTimeout(() => resolve(import("../components/ProductList")), 1000);
+  });
+});
+
 const ProductsPage = () => {
   const { products } = useSelector((state) => state.products_reducer);
   const { sort, filters } = useSelector((state) => state.filter_reducer);
   const dispatch = useDispatch();
-  React.useEffect(() => {
+  useEffect(() => {
     dispatch(filterProducts);
     dispatch(sortProducts);
   }, [products, sort, filters]);
@@ -17,10 +24,12 @@ const ProductsPage = () => {
       <Wrapper className="page">
         <div className="section-center products">
           <Filters />
-          <div>
-            <Sort />
-            <ProductList />
-          </div>
+          <Suspense fallback={<Loading />}>
+            <div>
+              <Sort />
+              <ProductList />
+            </div>
+          </Suspense>
         </div>
       </Wrapper>
     </main>

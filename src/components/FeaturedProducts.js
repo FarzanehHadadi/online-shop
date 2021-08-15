@@ -1,19 +1,14 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Error from "./Error";
-import Loading from "./Loading";
 import Product from "./Product";
-import { FaArrowAltCircleLeft } from "react-icons/fa";
 import { useSelector } from "react-redux";
 
 const FeaturedProducts = () => {
-  const { products_loading, products_error, featured_products } = useSelector(
+  const { products_error, featured_products } = useSelector(
     (state) => state.products_reducer
   );
-  if (products_loading) {
-    return <Loading />;
-  } else if (products_error) {
+  if (products_error) {
     return (
       <div className="section-center">
         <div className="title">
